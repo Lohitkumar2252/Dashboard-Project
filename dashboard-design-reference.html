@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SaaS Admin Dashboard — Design Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #FAFAF8;
+    --bg-card: #FFFFFF;
+    --bg-sunken: #F1F0EC;
+    --ink: #1A1D23;
+    --ink-secondary: #5B5F68;
+    --ink-muted: #8A8D93;
+    --border: #E6E4DD;
+    --slate: #3D5A80;
+    --slate-light: #EAF0F7;
+    --teal: #2A9D8F;
+    --teal-light: #E1F5EE;
+    --teal-dark: #04342C;
+    --amber: #E76F51;
+    --amber-light: #FAEEDA;
+    --amber-dark: #412402;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-page);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .display { font-family: 'Space Grotesk', sans-serif; font-weight: 500; }
+
+  /* --- Top nav for switching between the 4 page mockups --- */
+  .page-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    gap: 4px;
+    padding: 12px 24px;
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-nav button {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink-secondary);
+    cursor: pointer;
+  }
+  .page-nav button.active {
+    background: var(--bg-card);
+    border-color: var(--border);
+    color: var(--ink);
+  }
+
+  .page { display: none; max-width: 1080px; margin: 0 auto; padding: 32px 24px 80px; }
+  .page.active { display: block; }
+
+  /* --- Shared layout: sidebar + content --- */
+  .app-shell { display: grid; grid-template-columns: 220px 1fr; gap: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .sidebar { background: var(--bg-sunken); padding: 20px 16px; border-right: 1px solid var(--border); }
+  .sidebar .logo { font-size: 15px; font-weight: 600; margin-bottom: 24px; }
+  .sidebar .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; padding: 9px 10px; border-radius: 8px;
+    color: var(--ink-secondary); margin-bottom: 2px; cursor: default;
+  }
+  .sidebar .nav-item.current { background: var(--bg-card); color: var(--ink); font-weight: 500; border: 1px solid var(--border); }
+  .content { padding: 24px 28px; }
+
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .topbar h1 { font-size: 18px; margin: 0; }
+  .topbar .sub { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+
+  select, input, button.btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    background: var(--bg-card);
+    color: var(--ink);
+  }
+  button.btn.primary { background: var(--slate); color: white; border-color: var(--slate); }
+
+  /* --- KPI cards --- */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card { background: var(--bg-sunken); border-radius: var(--radius); padding: 14px 16px; position: relative; overflow: hidden; }
+  .kpi-label { font-size: 12px; color: var(--ink-secondary); margin-bottom: 4px; }
+  .kpi-value { font-size: 22px; font-weight: 500; }
+  .kpi-delta { font-size: 11px; margin-top: 2px; }
+  .kpi-delta.up { color: var(--teal-dark); }
+  .kpi-delta.down { color: var(--amber-dark); }
+  .spark { position: absolute; bottom: 10px; right: 10px; width: 64px; height: 18px; opacity: 0.7; }
+
+  /* --- Chart card --- */
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .card-head h2 { font-size: 15px; margin: 0; }
+  .card-head .hint { font-size: 11px; color: var(--ink-muted); }
+
+  .bars { display: flex; align-items: flex-end; gap: 20px; height: 130px; padding: 0 8px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .bar { width: 100%; border-radius: 4px 4px 0 0; }
+  .bar-label { font-size: 11px; color: var(--ink-secondary); }
+
+  /* --- Table --- */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; color: var(--ink-secondary); font-size: 12px; padding: 8px 6px; border-bottom: 1px solid var(--border); cursor: pointer; }
+  th.num, td.num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+  td { padding: 9px 6px; border-bottom: 1px solid var(--border); }
+  .badge { font-size: 11px; padding: 3px 9px; border-radius: 6px; font-weight: 500; }
+  .badge.pro { background: var(--teal-light); color: var(--teal-dark); }
+  .badge.starter { background: var(--amber-light); color: var(--amber-dark); }
+  .badge.ent { background: var(--slate-light); color: var(--slate); }
+  .row-actions { display: flex; gap: 8px; justify-content: flex-end; color: var(--ink-muted); }
+
+  /* --- Wizard --- */
+  .stepper { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+  .step-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }
+  .step-dot.done { background: var(--teal); color: white; }
+  .step-dot.current { background: var(--slate); color: white; }
+  .step-dot.todo { background: var(--bg-sunken); color: var(--ink-muted); border: 1px solid var(--border); }
+  .step-line { flex: 1; height: 1px; background: var(--border); }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12px; color: var(--ink-secondary); margin-bottom: 6px; }
+  .field input, .field select { width: 100%; padding: 9px 10px; }
+  .field .error { font-size: 11px; color: var(--amber); margin-top: 4px; }
+  .wizard-shell { max-width: 420px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+
+  .legend { font-size: 12px; color: var(--ink-secondary); margin-top: 14px; }
+  .legend .mono { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="page-nav">
+  <button class="active" onclick="showPage('overview', this)">1. Overview</button>
+  <button onclick="showPage('users', this)">2. Users</button>
+  <button onclick="showPage('wizard', this)">3. Add user</button>
+  <button onclick="showPage('reports', this)">4. Reports</button>
+</div>
+
+<!-- PAGE 1: OVERVIEW -->
+<div class="page active" id="page-overview">
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="logo display">Pulse</div>
+      <div class="nav-item current">Overview</div>
+      <div class="nav-item">Users</div>
+      <div class="nav-item">Reports</div>
+    </div>
+    <div class="content">
+      <div class="topbar">
+        <div>
+          <h1 class="display">Overview</h1>
+          <div class="sub">Last 30 days</div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span style="font-size:12px; color:var(--ink-secondary);">Role</span>
+          <select><option>Admin</option><option>Viewer</option></select>
+          <button class="btn primary">+ Add user</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value mono">$48,210</div>
+          <div class="kpi-delta up mono">+12.4%</div>
+          <svg class="spark" viewBox="0 0 100 24"><polyline points="0,20 15,16 30,18 45,10 60,12 75,4 100,6" fill="none" stroke="#2A9D8F" stroke-width="2"/></svg>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Active users</div>
+          <div class="kpi-value mono">3,842</div>
+          <div class="kpi-delta up mono">+3.1%</div>
+          <svg class="spark" viewBox="0 0 100 24"><polyline points="0,14 15,16 30,10 45,12 60,8 75,10 100,4" fill="none" stroke="#2A9D8F" stroke-width="2"/></svg>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Churn rate</div>
+          <div class="kpi-value mono">2.3%</div>
+          <div class="kpi-delta down mono">+0.4%</div>
+          <svg class="spark" viewBox="0 0 100 24"><polyline points="0,6 15,8 30,10 45,9 60,14 75,16 100,20" fill="none" stroke="#E76F51" stroke-width="2"/></svg>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Avg session</div>
+          <div class="kpi-value mono">6m 42s</div>
+          <div class="kpi-delta up mono">+8s</div>
+          <svg class="spark" viewBox="0 0 100 24"><polyline points="0,18 15,14 30,16 45,10 60,11 75,7 100,8" fill="none" stroke="#2A9D8F" stroke-width="2"/></svg>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2 class="display">Revenue by plan</h2>
+          <span class="hint">Click a bar to drill down</span>
+        </div>
+        <div class="bars">
+          <div class="bar-col"><div class="bar" style="height:40px; background:#5DCAA5;"></div><div class="bar-label">Starter</div></div>
+          <div class="bar-col"><div class="bar" style="height:85px; background:#2A9D8F;"></div><div class="bar-label">Pro</div></div>
+          <div class="bar-col"><div class="bar" style="height:105px; background:#04342C;"></div><div class="bar-label">Enterprise</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2 class="display">Users</h2><input placeholder="Filter by name or plan" style="width:180px;"></div>
+        <table>
+          <thead><tr><th>Name ↕</th><th>Plan ↕</th><th class="num">MRR ↕</th><th class="num">Actions</th></tr></thead>
+          <tbody>
+            <tr><td>Priya Nair</td><td><span class="badge pro">Pro</span></td><td class="num">$89</td><td class="num"><div class="row-actions">Edit</div></td></tr>
+            <tr><td>Arjun Verma</td><td><span class="badge starter">Starter</span></td><td class="num">$19</td><td class="num"><div class="row-actions">Edit</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="legend">Signature detail: sparkline lives inside the KPI number itself, not as a separate chart. Colors encode plan tier consistently across every page — <span class="mono">teal = Pro/Enterprise, amber = Starter, slate = structural UI</span>.</div>
+</div>
+
+<!-- PAGE 2: USERS -->
+<div class="page" id="page-users">
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="logo display">Pulse</div>
+      <div class="nav-item">Overview</div>
+      <div class="nav-item current">Users</div>
+      <div class="nav-item">Reports</div>
+    </div>
+    <div class="content">
+      <div class="topbar">
+        <div><h1 class="display">Users</h1><div class="sub">142 total</div></div>
+        <button class="btn primary">+ Add user</button>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div style="display:flex; gap:8px;">
+            <input placeholder="Search users" style="width:200px;">
+            <select><option>All plans</option><option>Starter</option><option>Pro</option><option>Enterprise</option></select>
+          </div>
+          <span class="hint">Showing 1–10 of 142</span>
+        </div>
+        <table>
+          <thead><tr><th>Name ↕</th><th>Email</th><th>Plan ↕</th><th class="num">MRR ↕</th><th>Joined ↕</th><th class="num">Actions</th></tr></thead>
+          <tbody>
+            <tr><td>Priya Nair</td><td class="mono" style="font-size:12px;">priya@northwind.co</td><td><span class="badge pro">Pro</span></td><td class="num">$89</td><td>Feb 2026</td><td class="num"><div class="row-actions">Edit · Remove</div></td></tr>
+            <tr><td>Arjun Verma</td><td class="mono" style="font-size:12px;">arjun@vertex.io</td><td><span class="badge starter">Starter</span></td><td class="num">$19</td><td>Nov 2025</td><td class="num"><div class="row-actions">Edit · Remove</div></td></tr>
+            <tr><td>Meera Iyer</td><td class="mono" style="font-size:12px;">meera@coral.com</td><td><span class="badge ent">Enterprise</span></td><td class="num">$249</td><td>Jun 2025</td><td class="num"><div class="row-actions">Edit · Remove</div></td></tr>
+            <tr><td>Karan Shah</td><td class="mono" style="font-size:12px;">karan@loop.dev</td><td><span class="badge starter">Starter</span></td><td class="num">$19</td><td>Jan 2026</td><td class="num"><div class="row-actions">Edit · Remove</div></td></tr>
+          </tbody>
+        </table>
+        <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:14px;">
+          <button class="btn" style="padding:5px 10px;">‹</button>
+          <button class="btn" style="padding:5px 10px; background:var(--bg-sunken);">1</button>
+          <button class="btn" style="padding:5px 10px;">2</button>
+          <button class="btn" style="padding:5px 10px;">3</button>
+          <button class="btn" style="padding:5px 10px;">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="legend">"Remove" action is hidden entirely (not just disabled) when role = Viewer — RBAC-gated at render time via <span class="mono">RoleContext</span>, not CSS.</div>
+</div>
+
+<!-- PAGE 3: ADD USER WIZARD -->
+<div class="page" id="page-wizard">
+  <div class="wizard-shell">
+    <div class="stepper">
+      <div class="step-dot done">✓</div>
+      <div class="step-line"></div>
+      <div class="step-dot current">2</div>
+      <div class="step-line"></div>
+      <div class="step-dot todo">3</div>
+    </div>
+    <h1 class="display" style="font-size:16px; margin:0 0 4px;">Plan & billing</h1>
+    <div class="sub" style="margin-bottom:20px;">Step 2 of 3 — account details</div>
+    <div class="field">
+      <label>Plan</label>
+      <select><option>Starter — $19/mo</option><option>Pro — $89/mo</option><option>Enterprise — custom</option></select>
+    </div>
+    <div class="field">
+      <label>Seats</label>
+      <input value="1" type="number" min="1">
+    </div>
+    <div class="field">
+      <label>Billing email</label>
+      <input placeholder="name@company.com">
+      <div class="error">Enter a valid email address.</div>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:20px;">
+      <button class="btn">Back</button>
+      <button class="btn primary">Continue</button>
+    </div>
+  </div>
+  <div class="legend" style="text-align:center; margin-top:16px;">React Hook Form + Zod: validation errors shown inline per field, submit disabled until the current step is valid. Zod schema per step, not one giant schema — easier to test.</div>
+</div>
+
+<!-- PAGE 4: REPORTS -->
+<div class="page" id="page-reports">
+  <div class="app-shell">
+    <div class="sidebar">
+      <div class="logo display">Pulse</div>
+      <div class="nav-item">Overview</div>
+      <div class="nav-item">Users</div>
+      <div class="nav-item current">Reports</div>
+    </div>
+    <div class="content">
+      <div class="topbar">
+        <div><h1 class="display">Reports</h1><div class="sub">Revenue trend</div></div>
+        <div style="display:flex; gap:8px;">
+          <select><option>Last 30 days</option><option>Last 90 days</option><option>Year to date</option></select>
+          <button class="btn">Export CSV</button>
+        </div>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 600 160" style="width:100%; height:160px;">
+          <polyline points="0,130 60,110 120,120 180,70 240,85 300,40 360,55 420,25 480,35 540,10 600,20" fill="none" stroke="#2A9D8F" stroke-width="2.5"/>
+          <line x1="0" y1="150" x2="600" y2="150" stroke="#E6E4DD" stroke-width="1"/>
+        </svg>
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-muted); margin-top:6px;">
+          <span>Jul 1</span><span>Jul 15</span><span>Jul 29</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2 class="display">By plan</h2></div>
+        <table>
+          <thead><tr><th>Plan</th><th class="num">MRR</th><th class="num">Customers</th><th class="num">Avg deal</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge starter">Starter</span></td><td class="num">$4,180</td><td class="num">220</td><td class="num">$19</td></tr>
+            <tr><td><span class="badge pro">Pro</span></td><td class="num">$22,630</td><td class="num">254</td><td class="num">$89</td></tr>
+            <tr><td><span class="badge ent">Enterprise</span></td><td class="num">$21,400</td><td class="num">14</td><td class="num">$1,529</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
