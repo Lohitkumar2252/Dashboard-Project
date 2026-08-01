@@ -1,30 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { fetchRevenueByPlan } from "../Data";
+import Chart from "./Chart";
+
 
 const ChartSection = () => {
-  const [revenueByPlan, setrevenueByPlan] = useState(null);
-  const [Loading, setLoading] = useState(true);
-  useEffect(() => {
-    async function getRevenueByPlan() {
-      try {
-        const response = await fetchRevenueByPlan();
-        setrevenueByPlan(response);
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getRevenueByPlan();
-  }, []);
-
-  if (Loading) return <div className="p-10">Loading...</div>;
+ 
   return (
-    <div>
-      {revenueByPlan.map((e) => {
-        return <p>{e.mrr}</p>;
-      })}
+    <div className="border border-[#6b6a6a90] mx-6 px-8  pt-5 rounded-2xl">
+      <h2 className="text-[1.3rem] font-semibold">Revenue By Plan</h2>
+      <Chart/>
     </div>
   );
 };

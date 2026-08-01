@@ -3,6 +3,7 @@ import React from "react";
 import Header from "../Components/Header";
 import Cards from "../Components/Cards";
 import ChartSection from "../Components/ChartSection";
+import UsersSection from "../Components/UsersSection";
 
 
 const Overview = () => {
@@ -12,6 +13,7 @@ const Overview = () => {
       <Header />
       <Cards/>
       <ChartSection/>
+      <UsersSection/>
     </div>
   );
 };

@@ -1,12 +1,11 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
-
-faker.seed(42);
+// faker.seed(42);
 
 const PLANS = [
-  { id: 'starter', label: 'Starter', mrr: 19 },
-  { id: 'pro', label: 'Pro', mrr: 89 },
-  { id: 'enterprise', label: 'Enterprise', mrr: 249 },
+  { id: "starter", label: "Starter", mrr: 19 },
+  { id: "pro", label: "Pro", mrr: 89 },
+  { id: "enterprise", label: "Enterprise", mrr: 249 },
 ];
 
 // Weighted so most users are Starter/Pro and Enterprise is rare —
@@ -17,6 +16,12 @@ function randomPlan() {
   if (roll < 0.85) return PLANS[1];
   return PLANS[2];
 }
+
+function getRandomUserCount(min = 100, max = 250) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+const userCount = getRandomUserCount(100, 250);
+
 
 function generateUsers(count = 150) {
   return Array.from({ length: count }, () => {
@@ -38,16 +43,17 @@ function generateRevenueSeries(days = 30) {
     value += faker.number.int({ min: -80, max: 160 });
     const date = new Date();
     date.setDate(date.getDate() - (days - i));
-    return { date: date.toISOString().slice(0, 10), revenue: Math.max(value, 400) };
+    return {
+      date: date.toISOString().slice(0, 10),
+      revenue: Math.max(value, 400),
+    };
   });
 }
 
 // Generate once, module-level, so every component importing this file
 // sees the same dataset for the whole session.
-const USERS = generateUsers(150);
 const REVENUE_SERIES = generateRevenueSeries(30);
-
-
+const USERS = generateUsers(userCount);
 
 const NETWORK_DELAY = 400;
 
@@ -66,7 +72,10 @@ export function fetchRevenueSeries() {
 export function fetchKpiSummary() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const totalRevenue = REVENUE_SERIES.reduce((sum, d) => sum + d.revenue, 0);
+      const totalRevenue = REVENUE_SERIES.reduce(
+        (sum, d) => sum + d.revenue,
+        0,
+      );
       const activeUsers = USERS.length;
       resolve({
         revenue: totalRevenue,
@@ -96,7 +105,7 @@ export function fetchRevenueByPlan() {
 }
 
 export const planColors = {
-  starter: { bg: '#FAEEDA', text: '#412402', bar: '#F0997B' },
-  pro: { bg: '#E1F5EE', text: '#04342C', bar: '#1D9E75' },
-  enterprise: { bg: '#EAF0F7', text: '#1A1D23', bar: '#04342C' },
+  starter: { bg: "#FAEEDA", text: "#412402", bar: "#5DCAA5" },
+  pro: { bg: "#E1F5EE", text: "#04342C", bar: "#1D9E75" },
+  enterprise: { bg: "#EAF0F7", text: "#1A1D23", bar: "#04342C" },
 };
