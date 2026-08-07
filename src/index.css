@@ -10,3 +10,11 @@
 .recharts-wrapper *:focus-visible {
   outline: revert;
 }
+
+
+
+
+.swiper {
+  padding-bottom: 60px !important;
+}
+

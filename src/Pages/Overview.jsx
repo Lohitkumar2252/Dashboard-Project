@@ -5,16 +5,16 @@ import Cards from "../Components/Cards";
 import ChartSection from "../Components/ChartSection";
 import UsersSection from "../Components/UsersSection";
 
-
 const Overview = () => {
-  
   return (
-    <div>
-      <Header />
-      <Cards/>
-      <ChartSection/>
-      <UsersSection/>
-    </div>
+    
+      <div className="w-full overflow-y-auto p-3">
+        <Header page="overview" />
+        <Cards />
+        <ChartSection />
+        <UsersSection />
+      </div>
+   
   );
 };
 

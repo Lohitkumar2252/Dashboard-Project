@@ -1,19 +1,16 @@
 import React from "react";
 import { planColors } from "../Data";
 
-const UserCard = ({ name, plan, MRR, action, email }) => {
+const ReportCard = ({ plan, MRR, customers }) => {
   const planColorArray = Object.entries(planColors);
   const currentPlan = planColorArray.filter((e) => {
     return e[0] == plan;
   });
 
-  console.log();
   return (
     <div
-      className={`border-b border-b-[#6b6a6a90] grid grid-cols-4 ${email?.trim() && "grid-cols-5"} grid-rows-1 p-1 py-2 w-full gap-5`}
+      className={`border-b border-b-[#6b6a6a90] grid grid-cols-4 grid-rows-1 p-1 py-2 w-full gap-5`}
     >
-      <h4 className="    capitalize">{name}</h4>
-      {email?.trim() && <p className="capitalize">{email}</p>}
       <div
         className={` text-sm  text-left capitalize p-1 rounded-lg w-fit`}
         style={{
@@ -24,9 +21,10 @@ const UserCard = ({ name, plan, MRR, action, email }) => {
         {plan}
       </div>
       <p className="capitalize">{`$${MRR}`}</p>
-      <p className="capitalize">{action}</p>
+      <p className="capitalize">{`${customers}`}</p>
+      <p className="capitalize">{`$19`}</p>
     </div>
   );
 };
 
-export default UserCard;
+export default ReportCard;

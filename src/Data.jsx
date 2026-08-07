@@ -20,7 +20,8 @@ function randomPlan() {
 function getRandomUserCount(min = 100, max = 250) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-const userCount = getRandomUserCount(100, 250);
+const userCount = getRandomUserCount(50, 100);
+
 
 
 function generateUsers(count = 150) {

@@ -5,7 +5,7 @@ import { fetchUsers, planColors } from "../Data";
 const UsersSection = () => {
   const [UserData, setUserdata] = useState(null);
   const [loading, setLoading] = useState(true);
-  const planColorArray = Object.entries(planColors);
+  
 
   useEffect(() => {
     async function getUsers() {
@@ -24,7 +24,7 @@ const UsersSection = () => {
 
   if (loading) return <div className="p-10">Loading...</div>;
   const slicedUserArray = UserData.slice(0, 3);
-  console.log(planColorArray);
+
   return (
     <div className="border border-[#6b6a6a90] mx-6 px-8 py-5 my-5 rounded-2xl">
       <h2 className="text-[1.3rem] font-semibold">Users</h2>
