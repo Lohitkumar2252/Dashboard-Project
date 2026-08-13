@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const Header = (props) => {
   return (
@@ -12,14 +13,22 @@ const Header = (props) => {
         <p className="text-base font-light">
           {props.page === "users" && `${props.NoUsers} Total`}
           {props.page === "reports" && `Revenue Trend`}
-          {props.page === "overview" &&  "Last 30 days"}
+          {props.page === "overview" && "Last 30 days"}
         </p>
       </div>
-      <div className={`right flex items-center gap-4 ${props.page === "reports" && "hidden"}`}>
-        <button className={`border px-8 text-sm py-2 rounded-lg ${props.page === "users" && "hidden"}`}>Admin</button>
-        <button className="px-8 text-sm py-2 bg-[#3D5A80] border-none outline-none rounded-lg text-white">
-          Add user
+      <div
+        className={`right flex items-center gap-4 ${props.page === "reports" && "hidden"}`}
+      >
+        <button
+          className={`border px-8 text-sm py-2 rounded-lg ${props.page === "users" && "hidden"}`}
+        >
+          Admin
         </button>
+        <Link to="/adduser"> 
+          <button className=" cursor-pointer px-8 text-sm py-2 bg-[#3D5A80] border-none outline-none rounded-lg text-white">
+            Add user
+          </button>
+        </Link>
       </div>
     </div>
   );

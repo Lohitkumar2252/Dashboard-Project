@@ -6,6 +6,7 @@ const Navbar = () => {
     { text: "Overview", url: "/" },
     { text: "Users", url: "users" },
     { text: "Reports", url: "reports" },
+    { text: "Add User", url: "adduser" },
   ];
   const [Selected, setSelected] = useState("Overview");
 

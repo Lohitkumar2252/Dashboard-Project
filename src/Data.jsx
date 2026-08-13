@@ -2,10 +2,10 @@ import { faker } from "@faker-js/faker";
 
 // faker.seed(42);
 
-const PLANS = [
-  { id: "starter", label: "Starter", mrr: 19 },
-  { id: "pro", label: "Pro", mrr: 89 },
-  { id: "enterprise", label: "Enterprise", mrr: 249 },
+export const PLANS = [
+  { id: "Starter", label: "Starter", mrr: 19 },
+  { id: "Pro", label: "Pro", mrr: 89 },
+  { id: "Enterprise", label: "Enterprise", mrr: 249 },
 ];
 
 // Weighted so most users are Starter/Pro and Enterprise is rare —
@@ -29,7 +29,7 @@ function generateUsers(count = 150) {
     const plan = randomPlan();
     return {
       id: faker.string.uuid(),
-      name: faker.person.fullName(),
+      fullName: faker.person.fullName(),
       email: faker.internet.email().toLowerCase(),
       plan: plan.id,
       mrr: plan.mrr,
@@ -106,7 +106,7 @@ export function fetchRevenueByPlan() {
 }
 
 export const planColors = {
-  starter: { bg: "#FAEEDA", text: "#412402", bar: "#5DCAA5" },
-  pro: { bg: "#E1F5EE", text: "#04342C", bar: "#1D9E75" },
-  enterprise: { bg: "#EAF0F7", text: "#1A1D23", bar: "#04342C" },
+  Starter: { bg: "#FAEEDA", text: "#412402", bar: "#5DCAA5" },
+  Pro: { bg: "#E1F5EE", text: "#04342C", bar: "#1D9E75" },
+  Enterprise: { bg: "#EAF0F7", text: "#1A1D23", bar: "#04342C" },
 };

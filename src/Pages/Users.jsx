@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../Components/Header";
 
 import { fetchUsers } from "../Data";
@@ -8,40 +8,28 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
+import UserContext from "../Components/UserContext";
 
 const Users = () => {
-  const [Users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  
+  
+
+
+  const { UserData, setUserData } = useContext(UserContext);
+
   const [SelectedPlan, setSelectedPlan] = useState("");
-  const [FilteredUsers, setFilteredUsers] = useState([]);
-
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const response = await fetchUsers();
-        setUsers(response);
-        setFilteredUsers(response)
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getUsers();
-  }, []);
-
+  const [FilteredUsers, setFilteredUsers] = useState(UserData);
   const handleFilterUsers = (selected) => {
     setSelectedPlan(selected);
 
     if (selected === "") {
-      setFilteredUsers(Users); 
+      setFilteredUsers(UserData); 
     } else {
-      const filtered = Users.filter((user) => user.plan === selected);
+      const filtered = UserData.filter((user) => user.plan === selected);
       setFilteredUsers(filtered);
     }
   };
-  if (loading) return <div className="p-10">Loading...</div>;
+
 
   function groupUsers(arr, size) {
     const groups = [];
@@ -73,7 +61,7 @@ const Users = () => {
 
   return (
     <div className="w-full overflow-y-auto p-3">
-      <Header NoUsers={Users.length} page="users" />
+      <Header NoUsers={UserData.length} page="users" />
       <div className="wrapper mt-10 w-full border rounded-xl p-4 border-[#b3b3b3]">
         <select
           value={SelectedPlan}
@@ -83,9 +71,9 @@ const Users = () => {
           className="border border-[#a4a4a4] py-1 outline-none rounded-lg mb-5 px-3"
         >
           <option value="">All Plans</option>
-          <option value="starter">Starter</option>
-          <option value="pro">Pro</option>
-          <option value="enterprise">Enterprise</option>
+          <option value="Starter">Starter</option>
+          <option value="Pro">Pro</option>
+          <option value="Enterprise">Enterprise</option>
         </select>
        
         <div className="usersContainer w-full h-full relative">
@@ -115,7 +103,7 @@ const Users = () => {
                       return (
                         <UserCard
                           key={i}
-                          name={user.name}
+                          name={user.fullName}
                           MRR={user.mrr}
                           plan={user.plan}
                           action="edit"

@@ -3,11 +3,12 @@ import { planColors } from "../Data";
 
 const UserCard = ({ name, plan, MRR, action, email }) => {
   const planColorArray = Object.entries(planColors);
+
   const currentPlan = planColorArray.filter((e) => {
     return e[0] == plan;
   });
 
-  console.log();
+  
   return (
     <div
       className={`border-b border-b-[#6b6a6a90] grid grid-cols-4 ${email?.trim() && "grid-cols-5"} grid-rows-1 p-1 py-2 w-full gap-5`}
