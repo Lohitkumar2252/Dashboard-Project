@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchRevenueByPlan } from "../Data";
+
 import Chart from "./Chart";
 
 

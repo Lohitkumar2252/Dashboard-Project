@@ -1,4 +1,6 @@
 import { faker } from "@faker-js/faker";
+import { useContext } from "react";
+import UserContext from "./Components/UserContext";
 
 // faker.seed(42);
 
@@ -21,8 +23,6 @@ function getRandomUserCount(min = 100, max = 250) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 const userCount = getRandomUserCount(50, 100);
-
-
 
 function generateUsers(count = 150) {
   return Array.from({ length: count }, () => {
@@ -53,10 +53,10 @@ function generateRevenueSeries(days = 30) {
 
 // Generate once, module-level, so every component importing this file
 // sees the same dataset for the whole session.
-const REVENUE_SERIES = generateRevenueSeries(30);
+export const REVENUE_SERIES = generateRevenueSeries(30);
 const USERS = generateUsers(userCount);
 
-const NETWORK_DELAY = 400;
+export const NETWORK_DELAY = 400;
 
 export function fetchUsers() {
   return new Promise((resolve) => {
@@ -70,40 +70,7 @@ export function fetchRevenueSeries() {
   });
 }
 
-export function fetchKpiSummary() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const totalRevenue = REVENUE_SERIES.reduce(
-        (sum, d) => sum + d.revenue,
-        0,
-      );
-      const activeUsers = USERS.length;
-      resolve({
-        revenue: totalRevenue,
-        activeUsers,
-        churnRate: 2.3,
-        avgSessionSeconds: 402,
-      });
-    }, NETWORK_DELAY);
-  });
-}
 
-export function fetchRevenueByPlan() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const byPlan = PLANS.map((plan) => {
-        const customers = USERS.filter((u) => u.plan === plan.id);
-        return {
-          plan: plan.id,
-          label: plan.label,
-          mrr: customers.reduce((sum, u) => sum + u.mrr, 0),
-          customerCount: customers.length,
-        };
-      });
-      resolve(byPlan);
-    }, NETWORK_DELAY);
-  });
-}
 
 export const planColors = {
   Starter: { bg: "#FAEEDA", text: "#412402", bar: "#5DCAA5" },

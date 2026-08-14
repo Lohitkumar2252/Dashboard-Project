@@ -10,7 +10,7 @@ const AddUserForm = () => {
     fullName: z.string().min(1),
     email: z.email(),
     billingEmail: z.email(),
-    seats: z.coerce.number(),
+    
     plan: z.enum(["Starter", "Pro", "Enterprise"]),
     role: z.enum(["Admin", "Viewer"]),
   });
@@ -20,9 +20,7 @@ const AddUserForm = () => {
 
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      seats: 1,
-    },
+   
     resolver: zodResolver(schema),
   });
   let navigate = useNavigate();
@@ -106,22 +104,7 @@ const AddUserForm = () => {
             <p className="text-red-500 text-xs">{errors.plan.message}</p>
           )}
         </label>
-        <label
-          htmlFor="seats"
-          className=" flex flex-col font-semibold text-[0.9rem]"
-        >
-          Seats
-          <input
-            {...register("seats")}
-            type="number"
-            min="1"
-            className="border outline-none rounded-md p-2 text-sm"
-            id="seats"
-          />
-          {errors.seats && (
-            <p className="text-red-500 text-xs">{errors.seats.message}</p>
-          )}
-        </label>
+      
         <label
           htmlFor="Bill Email"
           className=" flex flex-col font-semibold text-[0.9rem]"
@@ -140,12 +123,10 @@ const AddUserForm = () => {
           )}
         </label>
         <div className="buttonContainer flex justify-between items-center mt-10">
-          <button className="border border-[#6e6e6e] rounded-md px-4 py-2 text-sm font-semibold">
-            Back
-          </button>
+         
           <button
             type="submit"
-            className=" rounded-md px-4 py-2 text-sm bg-[#3D5A80] text-white font-semibold"
+            className="ml-auto rounded-md px-4 py-2 text-sm bg-[#3D5A80] text-white font-semibold"
           >
             Submit
           </button>

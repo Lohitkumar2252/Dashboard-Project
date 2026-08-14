@@ -1,28 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import { fetchUsers, planColors } from "../Data";
+import UserContext from "./UserContext";
 
 const UsersSection = () => {
-  const [UserData, setUserdata] = useState(null);
-  const [loading, setLoading] = useState(true);
-  
-
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const response = await fetchUsers();
-        setUserdata(response);
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getUsers();
-  }, []);
-
-  if (loading) return <div className="p-10">Loading...</div>;
+  const {UserData, setUserData} = useContext(UserContext);
   const slicedUserArray = UserData.slice(0, 3);
 
   return (
@@ -41,7 +23,7 @@ const UsersSection = () => {
           return (
             <UserCard
               key={i}
-              name={user.name}
+              name={user.fullName}
               MRR={user.mrr}
               plan={user.plan}
               action="edit"
