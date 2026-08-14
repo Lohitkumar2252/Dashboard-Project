@@ -14,7 +14,7 @@ const App = () => {
   const [formData, setformData] = useState({});
   const [UserData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
- 
+ const [role, setrole] = useState("admin");
 
   useEffect(() => {
     async function getUsers() {
@@ -37,7 +37,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <UserContext.Provider
-        value={{ formData, setformData, UserData, setUserData }}
+        value={{ formData, setformData, UserData, setUserData, role, setrole }}
       >
         <div className="container max-w-384 border mx-auto grid grid-cols-[20%_80%] h-screen overflow-hidden ">
           <Navbar />

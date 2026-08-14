@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router";
+import UserContext from "./UserContext";
 
 const Navbar = () => {
+  const {role} = useContext(UserContext);
   const pages = [
-    { text: "Overview", url: "/" },
-    { text: "Users", url: "users" },
-    { text: "Reports", url: "reports" },
-    { text: "Add User", url: "adduser" },
+    { text: "Overview", url: "/", hidden: false },
+    { text: "Users", url: "users", hidden: false },
+    { text: "Reports", url: "reports", hidden: false },
+    { text: "Add User", url: "adduser", hidden: role === "viewer" ? true : false },
   ];
   const [Selected, setSelected] = useState("Overview");
+  
 
   const handleClick = (clickedItem) => {
     setSelected(clickedItem);
@@ -20,7 +23,7 @@ const Navbar = () => {
         <ul className=" flex flex-col gap-2">
           {pages.map((e, i) => {
             return (
-              <NavLink key={i} to={`${e.url}`}>
+              <NavLink key={i} to={`${e.url}`} className={`${e.hidden && "hidden"}`} >
                 <li
                   onClick={() => handleClick(e.text)}
                   className={`text-[#5B5F68] font-semibold w-full p-2 rounded-lg  ${Selected == e.text && "bg-[#FFFFFF] text-black"}`}

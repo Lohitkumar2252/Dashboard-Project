@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { PLANS } from "../Data";
 import UserContext from "./UserContext";
 import { useNavigate } from "react-router";
+import Toast from "./Toast";
 
 const ReviewUser = () => {
   const { formData, setformData, UserData, setUserData } =
@@ -9,14 +10,14 @@ const ReviewUser = () => {
   let navigate = useNavigate();
   const selectedPlan = PLANS.find((plan) => plan.label === formData.plan);
 
-
   const reviewForm = [
     ["Name", formData.fullName],
     ["Email", formData.email],
     ["Plan", selectedPlan.label],
     ["MRR", selectedPlan.mrr],
   ];
-
+   const [toast, settoast] = useState(false)
+   
   const addUser = () => {
     const completeFormData = {
       ...formData,
@@ -24,9 +25,12 @@ const ReviewUser = () => {
     };
     setformData(completeFormData);
     setUserData([completeFormData, ...UserData]);
+    settoast(true);
+    console.log("User added successfully");
+    
     
   };
-  
+
   return (
     <div className="">
       <h1 className="font-bold text-[1.2rem]">Review & confirm</h1>
@@ -52,11 +56,15 @@ const ReviewUser = () => {
         </button>
         <button
           onClick={addUser}
-          className=" rounded-md px-4 py-2 text-sm bg-[#3D5A80] text-white font-semibold"
+          disabled={toast}
+          className={
+            `rounded-md px-4 py-2 text-sm bg-[#3D5A80] text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed` 
+          }
         >
           Confirm
         </button>
       </div>
+      {toast && <Toast message="User added successfully" type="success" settoast={settoast} />}
     </div>
   );
 };

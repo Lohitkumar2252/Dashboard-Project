@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { planColors } from "../Data";
+import UserContext from "./UserContext";
 
 const UserCard = ({ name, plan, MRR, action, email }) => {
+   const {role} = useContext(UserContext);
   const planColorArray = Object.entries(planColors);
 
   const currentPlan = planColorArray.filter((e) => {
@@ -25,7 +27,7 @@ const UserCard = ({ name, plan, MRR, action, email }) => {
         {plan}
       </div>
       <p className="capitalize">{`$${MRR}`}</p>
-      <p className="capitalize">{action}</p>
+      <p className={` ${role === "viewer" && "hidden"} capitalize`}>{action}</p>
     </div>
   );
 };

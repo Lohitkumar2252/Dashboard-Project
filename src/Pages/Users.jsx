@@ -106,7 +106,7 @@ const Users = () => {
                           name={user.fullName}
                           MRR={user.mrr}
                           plan={user.plan}
-                          action="edit"
+                          action="remove"
                           email={user.email}
                         />
                       );

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import UserContext from "./UserContext";
 
 const Header = (props) => {
+  const {role, setrole} = useContext(UserContext);
   return (
     <div className="py-2 px-5 flex items-center justify-between">
       <div className="left">
@@ -19,12 +21,16 @@ const Header = (props) => {
       <div
         className={`right flex items-center gap-4 ${props.page === "reports" && "hidden"}`}
       >
-        <button
+        {/* <button
           className={`border px-8 text-sm py-2 rounded-lg ${props.page === "users" && "hidden"}`}
         >
           Admin
-        </button>
-        <Link to="/adduser"> 
+        </button> */}
+        <select name="role" id="role" value={role} onChange={(e)=>setrole(e.target.value)} className="border px-8 text-sm py-2 rounded-lg outline-none">
+          <option value="admin">Admin</option>
+          <option value="viewer">Viewer</option>
+        </select>
+        <Link to="/adduser" className={`${role === "viewer" && "hidden"}`}> 
           <button className=" cursor-pointer px-8 text-sm py-2 bg-[#3D5A80] border-none outline-none rounded-lg text-white">
             Add user
           </button>

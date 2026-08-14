@@ -26,7 +26,7 @@ const UsersSection = () => {
               name={user.fullName}
               MRR={user.mrr}
               plan={user.plan}
-              action="edit"
+              action="remove"
             
             />
           );
