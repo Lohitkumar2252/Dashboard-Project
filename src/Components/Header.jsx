@@ -21,11 +21,7 @@ const Header = (props) => {
       <div
         className={`right flex items-center gap-4 ${props.page === "reports" && "hidden"}`}
       >
-        {/* <button
-          className={`border px-8 text-sm py-2 rounded-lg ${props.page === "users" && "hidden"}`}
-        >
-          Admin
-        </button> */}
+        
         <select name="role" id="role" value={role} onChange={(e)=>setrole(e.target.value)} className="border px-8 text-sm py-2 rounded-lg outline-none">
           <option value="admin">Admin</option>
           <option value="viewer">Viewer</option>

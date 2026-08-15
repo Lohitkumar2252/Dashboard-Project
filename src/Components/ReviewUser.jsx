@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { PLANS } from "../Data";
+import React, { useContext, useEffect, useState } from "react";
+import { PLANS } from "./Data";
 import UserContext from "./UserContext";
 import { useNavigate } from "react-router";
 import Toast from "./Toast";
@@ -10,27 +10,32 @@ const ReviewUser = () => {
     useContext(UserContext);
   let navigate = useNavigate();
   const selectedPlan = PLANS.find((plan) => plan.label === formData.plan);
-
+  useEffect(() => {
+    if (!selectedPlan) {
+      navigate("/adduser");
+    }
+  }, []);
+  if (!selectedPlan) {
+    return null;
+  }
   const reviewForm = [
     ["Name", formData.fullName],
     ["Email", formData.email],
     ["Plan", selectedPlan.label],
     ["MRR", selectedPlan.mrr],
   ];
-   const [toast, settoast] = useState(false)
-   
+  const [toast, settoast] = useState(false);
+
   const addUser = () => {
     const completeFormData = {
       ...formData,
       mrr: selectedPlan.mrr,
-      id: faker.string.uuid()
+      id: faker.string.uuid(),
     };
     setformData(completeFormData);
     setUserData([completeFormData, ...UserData]);
     settoast(true);
     console.log("User added successfully");
-    
-    
   };
 
   return (
@@ -59,14 +64,18 @@ const ReviewUser = () => {
         <button
           onClick={addUser}
           disabled={toast}
-          className={
-            `rounded-md px-4 py-2 text-sm bg-[#3D5A80] text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed` 
-          }
+          className={`rounded-md px-4 py-2 text-sm bg-[#3D5A80] text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           Confirm
         </button>
       </div>
-      {toast && <Toast message="User added successfully" type="success" settoast={settoast} />}
+      {toast && (
+        <Toast
+          message="User added successfully"
+          type="success"
+          settoast={settoast}
+        />
+      )}
     </div>
   );
 };

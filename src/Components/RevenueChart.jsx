@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { fetchRevenueSeries } from "../Data";
+import { fetchRevenueSeries } from "./Data";
 
 const RevenueChart = () => {
   const [RevenueSeries, setRevenueSeries] = useState(null);
@@ -18,7 +18,6 @@ const RevenueChart = () => {
       try {
         const response = await fetchRevenueSeries();
         setRevenueSeries(response);
-    
       } catch (err) {
         console.error(err.message);
       } finally {
@@ -34,9 +33,9 @@ const RevenueChart = () => {
       <LineChart
         style={{
           width: "100%",
-        //   maxWidth: "700px",
+          //   maxWidth: "700px",
           height: "100%",
-        //   maxHeight: "70vh",
+          //   maxHeight: "70vh",
           aspectRatio: 1.618,
         }}
         responsive
@@ -69,8 +68,6 @@ const RevenueChart = () => {
           dot={false}
           activeDot={{ r: 8, stroke: "var(--color-surface-base)" }}
         />
-        
-        
       </LineChart>
     </div>
   );

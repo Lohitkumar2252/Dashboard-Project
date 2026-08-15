@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../Components/Header";
 
-import { fetchUsers } from "../Data";
+import { fetchUsers } from "../Components/Data";
 import UserCard from "../Components/UserCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -11,20 +11,14 @@ import { Pagination, Navigation } from "swiper/modules";
 import UserContext from "../Components/UserContext";
 
 const Users = () => {
-  
-  
-
-
   const { UserData, setUserData } = useContext(UserContext);
 
   const [SelectedPlan, setSelectedPlan] = useState("");
   const [FilteredUsers, setFilteredUsers] = useState(UserData);
   const handleFilterUsers = (selected) => {
     setSelectedPlan(selected);
-
-    
   };
-useEffect(() => {
+  useEffect(() => {
     if (SelectedPlan === "") {
       setFilteredUsers(UserData);
     } else {
@@ -77,7 +71,7 @@ useEffect(() => {
           <option value="Pro">Pro</option>
           <option value="Enterprise">Enterprise</option>
         </select>
-       
+
         <div className="usersContainer w-full h-full relative">
           <div className="header flex items-center justify-between px-1 py-2 border-b border-b-[#6b6a6a90] text-[#5B5F68] ">
             <h3 className="w-full  text-left">Name</h3>
@@ -87,7 +81,7 @@ useEffect(() => {
             <h3 className="w-full  text-left">Actions</h3>
           </div>
           <Swiper
-          key={SelectedPlan}
+            key={SelectedPlan}
             pagination={pagination}
             navigation={true}
             navigation={{
@@ -99,8 +93,8 @@ useEffect(() => {
           >
             {groupedUsers.map((group, i) => {
               return (
-                <SwiperSlide>
-                  <div key={i} className="grid grid-rows-4 grid-flow-col gap-2">
+                <SwiperSlide key={i}>
+                  <div className="grid grid-rows-4 grid-flow-col gap-2">
                     {group.map((user, i) => {
                       return (
                         <UserCard

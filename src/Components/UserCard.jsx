@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
-import { planColors } from "../Data";
+import { planColors } from "./Data";
 import UserContext from "./UserContext";
 
 const UserCard = ({ name, plan, MRR, action, email, uid }) => {
-   const {role, handleRemoveUser} = useContext(UserContext);
+  const { role, handleRemoveUser } = useContext(UserContext);
   const planColorArray = Object.entries(planColors);
 
   const currentPlan = planColorArray.filter((e) => {
     return e[0] == plan;
   });
-  
-  
+
   return (
     <div
       className={`border-b border-b-[#6b6a6a90] grid grid-cols-4 ${email?.trim() && "grid-cols-5"} grid-rows-1 p-1 py-2 w-full gap-5`}
@@ -27,7 +26,12 @@ const UserCard = ({ name, plan, MRR, action, email, uid }) => {
         {plan}
       </div>
       <p className="capitalize">{`$${MRR}`}</p>
-      <button disabled={role === "viewer"} onClick={() => handleRemoveUser(uid)} className={`disabled:opacity-50  disabled:cursor-not-allowed capitalize font-semibold hover:cursor-pointer text-xs text-left text-red-400`}>{action}</button>
+      <button
+        onClick={() => handleRemoveUser(uid)}
+        className={` ${role === "viewer" && "hidden"} capitalize font-semibold hover:cursor-pointer text-xs text-left text-red-400`}
+      >
+        {action}
+      </button>
     </div>
   );
 };

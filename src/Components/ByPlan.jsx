@@ -1,41 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { NETWORK_DELAY, PLANS } from "../Data";
+import fetchRevenueByPlan, { NETWORK_DELAY, PLANS } from "./Data";
 import ReportCard from "./ReportCard";
 import UserContext from "./UserContext";
 
 const ByPlan = () => {
-
-    const { UserData, setUserData } = useContext(UserContext);
-
-// console.log(UserData)
- function fetchRevenueByPlan() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const byPlan = PLANS.map((plan) => {
-          const customers = UserData.filter((u) => u.plan === plan.id);
-          return {
-            plan: plan.id,
-            label: plan.label,
-            mrr: customers.reduce((sum, u) => sum + u.mrr, 0),
-            customerCount: customers.length,
-          };
-        });
-        resolve(byPlan);
-      }, NETWORK_DELAY);
-    });
-  }
-
-
-
+  const { UserData, setUserData } = useContext(UserContext);
   const [RevenueByPlan, setRevenueByPlan] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getRevenueByPlan() {
       try {
-        const response = await fetchRevenueByPlan();
+        const response = await fetchRevenueByPlan(UserData);
         setRevenueByPlan(response);
-       
       } catch (err) {
         console.error(err.message);
       } finally {

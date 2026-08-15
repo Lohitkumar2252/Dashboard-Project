@@ -1,5 +1,5 @@
 import React from "react";
-import { planColors } from "../Data";
+import { planColors } from "./Data";
 
 const ReportCard = ({ plan, MRR, customers }) => {
   const planColorArray = Object.entries(planColors);
@@ -22,7 +22,7 @@ const ReportCard = ({ plan, MRR, customers }) => {
       </div>
       <p className="capitalize">{`$${MRR}`}</p>
       <p className="capitalize">{`${customers}`}</p>
-      <p className="capitalize">{`$19`}</p>
+      <p className="capitalize">{`$${(MRR / customers).toFixed(2)}`}</p>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserCard from "./UserCard";
-import { fetchUsers, planColors } from "../Data";
+import { fetchUsers, planColors } from "./Data";
 import UserContext from "./UserContext";
 
 const UsersSection = () => {
-  const {UserData, setUserData} = useContext(UserContext);
+  const { UserData, setUserData } = useContext(UserContext);
   const slicedUserArray = UserData.slice(0, 3);
 
   return (
@@ -19,7 +19,6 @@ const UsersSection = () => {
           <h3 className="w-full  text-left">Actions</h3>
         </div>
         {slicedUserArray.map((user, i) => {
-         
           return (
             <UserCard
               key={i}

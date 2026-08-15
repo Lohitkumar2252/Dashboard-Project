@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { useContext } from "react";
-import UserContext from "./Components/UserContext";
+import UserContext from "./UserContext";
 
-// faker.seed(42);
+faker.seed(42);
 
 export const PLANS = [
   { id: "Starter", label: "Starter", mrr: 19 },
@@ -10,19 +10,14 @@ export const PLANS = [
   { id: "Enterprise", label: "Enterprise", mrr: 249 },
 ];
 
-// Weighted so most users are Starter/Pro and Enterprise is rare —
-// mirrors a real SaaS customer distribution instead of an even 1/3 split.
+// Weighted so most users are Starter/Pro and Enterprise is rare
+
 function randomPlan() {
   const roll = Math.random();
   if (roll < 0.5) return PLANS[0];
   if (roll < 0.85) return PLANS[1];
   return PLANS[2];
 }
-
-function getRandomUserCount(min = 100, max = 250) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-const userCount = getRandomUserCount(50, 100);
 
 function generateUsers(count = 150) {
   return Array.from({ length: count }, () => {
@@ -51,10 +46,9 @@ function generateRevenueSeries(days = 30) {
   });
 }
 
-// Generate once, module-level, so every component importing this file
 // sees the same dataset for the whole session.
 export const REVENUE_SERIES = generateRevenueSeries(30);
-const USERS = generateUsers(userCount);
+const USERS = generateUsers(150);
 
 export const NETWORK_DELAY = 400;
 
@@ -70,7 +64,22 @@ export function fetchRevenueSeries() {
   });
 }
 
-
+export default function fetchRevenueByPlan(userData) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const byPlan = PLANS.map((plan) => {
+        const customers = userData.filter((u) => u.plan === plan.id);
+        return {
+          plan: plan.id,
+          label: plan.label,
+          mrr: customers.reduce((sum, u) => sum + u.mrr, 0),
+          customerCount: customers.length,
+        };
+      });
+      resolve(byPlan);
+    }, NETWORK_DELAY);
+  });
+}
 
 export const planColors = {
   Starter: { bg: "#FAEEDA", text: "#412402", bar: "#5DCAA5" },

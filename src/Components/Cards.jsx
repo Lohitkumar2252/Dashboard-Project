@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { secondsFormatter } from "../Components/secondsFormatter";
 import UserContext from "./UserContext";
-import { NETWORK_DELAY, REVENUE_SERIES } from "../Data";
+import { NETWORK_DELAY, REVENUE_SERIES } from "./Data";
 const Cards = () => {
   const [kpiData, setKpiData] = useState(null);
   const [loading, setLoading] = useState(true);
