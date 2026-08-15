@@ -10,6 +10,7 @@ const ReviewUser = () => {
     useContext(UserContext);
   let navigate = useNavigate();
   const selectedPlan = PLANS.find((plan) => plan.label === formData.plan);
+  const [toast, settoast] = useState(false);
   useEffect(() => {
     if (!selectedPlan) {
       navigate("/adduser");
@@ -24,7 +25,6 @@ const ReviewUser = () => {
     ["Plan", selectedPlan.label],
     ["MRR", selectedPlan.mrr],
   ];
-  const [toast, settoast] = useState(false);
 
   const addUser = () => {
     const completeFormData = {
