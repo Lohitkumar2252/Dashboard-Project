@@ -48,7 +48,7 @@ const Chart = () => {
     }
 
     getRevenueByPlan();
-  }, []);
+  }, [UserData]);
   const planColorArray = Object.entries(planColors);
 
   if (loading) return <div className="p-10">Loading...</div>;

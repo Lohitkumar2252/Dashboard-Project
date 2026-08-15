@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { planColors } from "../Data";
 import UserContext from "./UserContext";
 
-const UserCard = ({ name, plan, MRR, action, email }) => {
-   const {role} = useContext(UserContext);
+const UserCard = ({ name, plan, MRR, action, email, uid }) => {
+   const {role, handleRemoveUser} = useContext(UserContext);
   const planColorArray = Object.entries(planColors);
 
   const currentPlan = planColorArray.filter((e) => {
     return e[0] == plan;
   });
-
+  
   
   return (
     <div
@@ -27,7 +27,7 @@ const UserCard = ({ name, plan, MRR, action, email }) => {
         {plan}
       </div>
       <p className="capitalize">{`$${MRR}`}</p>
-      <p className={` ${role === "viewer" && "hidden"} capitalize`}>{action}</p>
+      <button disabled={role === "viewer"} onClick={() => handleRemoveUser(uid)} className={`disabled:opacity-50  disabled:cursor-not-allowed capitalize font-semibold hover:cursor-pointer text-xs text-left text-red-400`}>{action}</button>
     </div>
   );
 };

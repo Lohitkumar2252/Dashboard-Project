@@ -27,7 +27,7 @@ const UsersSection = () => {
               MRR={user.mrr}
               plan={user.plan}
               action="remove"
-            
+              uid={user.id}
             />
           );
         })}

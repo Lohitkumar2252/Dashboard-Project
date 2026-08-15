@@ -15,7 +15,11 @@ const App = () => {
   const [UserData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
  const [role, setrole] = useState("admin");
-
+  function handleRemoveUser(uid) {
+    const updatedUserData = UserData.filter((user) => user.id !== uid);
+    setUserData(updatedUserData);
+    console.log("User removed successfully");
+  }
   useEffect(() => {
     async function getUsers() {
       try {
@@ -37,7 +41,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <UserContext.Provider
-        value={{ formData, setformData, UserData, setUserData, role, setrole }}
+        value={{ formData, setformData, UserData, setUserData, role, setrole, handleRemoveUser }}
       >
         <div className="container max-w-384 border mx-auto grid grid-cols-[20%_80%] h-screen overflow-hidden ">
           <Navbar />

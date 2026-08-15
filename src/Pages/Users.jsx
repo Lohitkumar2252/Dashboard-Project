@@ -22,14 +22,16 @@ const Users = () => {
   const handleFilterUsers = (selected) => {
     setSelectedPlan(selected);
 
-    if (selected === "") {
-      setFilteredUsers(UserData); 
+    
+  };
+useEffect(() => {
+    if (SelectedPlan === "") {
+      setFilteredUsers(UserData);
     } else {
-      const filtered = UserData.filter((user) => user.plan === selected);
+      const filtered = UserData.filter((user) => user.plan === SelectedPlan);
       setFilteredUsers(filtered);
     }
-  };
-
+  }, [UserData, SelectedPlan]);
 
   function groupUsers(arr, size) {
     const groups = [];
@@ -108,6 +110,7 @@ const Users = () => {
                           plan={user.plan}
                           action="remove"
                           email={user.email}
+                          uid={user.id}
                         />
                       );
                     })}

@@ -3,6 +3,7 @@ import { PLANS } from "../Data";
 import UserContext from "./UserContext";
 import { useNavigate } from "react-router";
 import Toast from "./Toast";
+import { faker } from "@faker-js/faker";
 
 const ReviewUser = () => {
   const { formData, setformData, UserData, setUserData } =
@@ -22,6 +23,7 @@ const ReviewUser = () => {
     const completeFormData = {
       ...formData,
       mrr: selectedPlan.mrr,
+      id: faker.string.uuid()
     };
     setformData(completeFormData);
     setUserData([completeFormData, ...UserData]);
