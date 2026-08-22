@@ -2,7 +2,7 @@
 
 A frontend portfolio project: a generic SaaS admin dashboard (users, revenue, plans) built to demonstrate data-fetching patterns, form validation, and role-based UI — as a companion piece to [Stride](#) (my e-commerce project), which focuses more on cart/state management.
 
-**Live demo:** [link once deployed]
+**Live demo:** saas-admin-dashboard-project.netlify.app
 
 
 ## Features
