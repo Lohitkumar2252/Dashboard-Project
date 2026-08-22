@@ -3,11 +3,11 @@
 A frontend portfolio project: a generic SaaS admin dashboard (users, revenue, plans) built to demonstrate data-fetching patterns, form validation, and role-based UI — as a companion piece to [Stride](#) (my e-commerce project), which focuses more on cart/state management.
 
 **Live demo:** [link once deployed]
-**A demo, not a real product:** all data is generated client-side with Faker. There is no backend — see [Data layer](#data-layer) below for exactly what that means.
+
 
 ## Features
 
-- **Overview page** — KPI cards (revenue, active users, churn rate, avg session) with inline sparklines, a revenue-by-plan bar chart, and a snippet of the users list.
+- **Overview page** — KPI cards (revenue, active users, churn rate, avg session), a revenue-by-plan bar chart, and a snippet of the users list.
 - **Users page** — full user list with plan filtering, paginated via a swipeable carousel view (grouped 4 per page).
 - **Add User flow** — a validated form (React Hook Form + Zod) followed by a review/confirm step. Submitting adds the new user to the live list immediately — no page reload needed.
 - **Reports page** — a larger revenue trend chart and a by-plan MRR/customer breakdown table.
